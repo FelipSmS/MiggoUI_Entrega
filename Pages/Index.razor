@@ -1,0 +1,201 @@
+﻿@page "/home"
+@inherits LayoutComponentBase
+
+<div class="d-flex flex-column vh-100">
+    <!-- Header -->
+    <header class="bg-light text-dark text-center py-3">
+        <h1>Dashboard de Solicitações</h1>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow-1 d-flex flex-column align-items-center mt-4">
+        <div class="container">
+            <!-- Cards de Resumo -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Solicitações Entregues</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@SolicitacoesEntregues</h5>
+                            <p class="card-text">Últimos 7 dias</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Solicitações Recusadas</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@SolicitacoesRecusadas</h5>
+                            <p class="card-text">Últimos 7 dias</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Solicitações em Andamento</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@SolicitacoesAndamento</h5>
+                            <p class="card-text">Hoje</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header"><span class>Solicitações para Entregar</span></div>
+                        <div class="card-body">
+                            <h5 class="card-title">@SolicitacoesParaEntregar</h5>
+                            <p class="card-text">Hoje</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Detalhes -->
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Detalhes das Solicitações
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Título</th>
+                                <th>Data de Criação</th>
+                                <th>Status</th>
+                                <th>Data de Entrega</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (SolicitacoesDetalhadas != null && SolicitacoesDetalhadas.Any())
+                            {
+                                foreach (var solicitacao in SolicitacoesDetalhadas)
+                                {
+                                    <tr>
+                                        <td>@solicitacao.Id</td>
+                                        <td>@solicitacao.Cliente</td>
+                                        <td>@solicitacao.Titulo</td>
+                                        <td>@solicitacao.DataCriacao.ToShortDateString()</td>
+                                        <td>
+                                            <span class="badge @GetBadgeClass(solicitacao.Status)">
+                                                @solicitacao.Status
+                                            </span>
+                                        </td>
+                                        <td>@solicitacao.DataEntrega.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center">Nenhuma solicitação encontrada.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    private int SolicitacoesEntregues;
+    private int SolicitacoesRecusadas;
+    private int SolicitacoesAndamento;
+    private int SolicitacoesParaEntregar;
+    private List<Solicitacao> SolicitacoesDetalhadas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarDados();
+    }
+
+    private async Task CarregarDados()
+    {
+        SolicitacoesEntregues = await BuscarTotalEntreguesUltimos7Dias();
+        SolicitacoesRecusadas = await BuscarTotalRecusadasUltimos7Dias();
+        SolicitacoesAndamento = await BuscarSolicitacoesEmAndamentoHoje();
+        SolicitacoesParaEntregar = await BuscarSolicitacoesParaEntregarHoje();
+        SolicitacoesDetalhadas = await BuscarSolicitacoesDetalhadas();
+    }
+
+    private Task<int> BuscarTotalEntreguesUltimos7Dias() => Task.FromResult(25);
+    private Task<int> BuscarTotalRecusadasUltimos7Dias() => Task.FromResult(5);
+    private Task<int> BuscarSolicitacoesEmAndamentoHoje() => Task.FromResult(8);
+    private Task<int> BuscarSolicitacoesParaEntregarHoje() => Task.FromResult(4);
+    private Task<List<Solicitacao>> BuscarSolicitacoesDetalhadas()
+    {
+        return Task.FromResult(new List<Solicitacao>
+        {
+            new Solicitacao
+            {
+                Id = 1,
+                Cliente = "João Silva",
+                Titulo = "Post de Aniversário",
+                DataCriacao = DateTime.Now.AddDays(-7),
+                Status = "Concluído",
+                DataEntrega = DateTime.Now.AddDays(-1)
+            },
+            new Solicitacao
+            {
+                Id = 2,
+                Cliente = "Maria Oliveira",
+                Titulo = "Banner Promocional",
+                DataCriacao = DateTime.Now.AddDays(-5),
+                Status = "Aguardando Aprovação de Criação",
+                DataEntrega = DateTime.Now.AddDays(2)
+            },
+            new Solicitacao
+            {
+                Id = 3,
+                Cliente = "Carlos Santos",
+                Titulo = "Flyer de Evento",
+                DataCriacao = DateTime.Now.AddDays(-3),
+                Status = "Em Criação",
+                DataEntrega = DateTime.Now.AddDays(3)
+            },
+            new Solicitacao
+            {
+                Id = 4,
+                Cliente = "Ana Souza",
+                Titulo = "E-mail Marketing",
+                DataCriacao = DateTime.Now.AddDays(-1),
+                Status = "Aguardando Envio para Criação",
+                DataEntrega = DateTime.Now.AddDays(1)
+            }
+        });
+    }
+
+    private string GetBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Concluído" => "badge-success",
+            "Em Criação" => "badge-warning",
+            "Aguardando Aprovação de Criação" => "badge-info",
+            "Aguardando Envio para Criação" => "badge-secondary",
+            _ => "badge-light"
+        };
+    }
+
+    private void ExibirDetalhes(int id)
+    {
+        var solicitacao = SolicitacoesDetalhadas.FirstOrDefault(s => s.Id == id);
+        if (solicitacao != null)
+        {
+            Console.WriteLine($"Exibindo detalhes da solicitação {id}: {solicitacao.Titulo}");
+        }
+    }
+
+    private class Solicitacao
+    {
+        public int Id { get; set; }
+        public string Cliente { get; set; }
+        public string Titulo { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public string Status { get; set; }
+        public DateTime DataEntrega { get; set; }
+    }
+}

@@ -1,0 +1,112 @@
+﻿@page "/aprovacoes"
+@using miggo.adminitrativo.Pages.Aprovacoes.Components
+
+<PageTitle>Aprovações</PageTitle>
+
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Aprovações de Criação</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="filtroId">ID da Aprovação</label>
+                        <input type="text" class="form-control" id="filtroId" placeholder="Digite o ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroCriador">Criador</label>
+                        <input type="text" class="form-control" id="filtroCliente" placeholder="Nome do Criador">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroDataCriacao">Data de Criação</label>
+                        <input type="date" class="form-control" id="filtroDataCriacao">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroStatus">Status</label>
+                        <select class="form-control" id="filtroStatus">
+                            <option value="">Todos</option>
+                            <option value="Concluído">Concluído</option>
+                            <option value="Em Progresso">Em Progresso</option>
+                            <option value="Atrasado">Atrasado</option>
+                            <option value="Novo">Novo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroPrazoEntrega">Prazo para Entrega</label>
+                        <input type="date" class="form-control" id="filtroPrazoEntrega">
+                    </div>
+
+                    <button class="btn btn-primary btn-block mt-3" @onclick="FiltrarSolicitacoes">Filtrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Solicitações</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NºSolicitação</th>
+                                    <th>Criador</th>
+                                    <th>Data de Criação</th>
+                                    <th>Status</th>
+                                    <th>Prazo para Entrega</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>45588</td>
+                                    <td>Luan Almeida</td>
+                                    <td>2024-10-01</td>
+                                    <td><span class="badge badge-success">Concluído</span></td>
+                                    <td>2024-10-29</td>
+                                    <td><button class="btn btn-primary" @onclick="MostrarPainelDetalhes">Ver</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (mostrarPainelDetalhes)
+{
+    <PainelDetalhes OnFechar="FecharPainelDetalhes" />
+}
+
+@code {
+    private bool mostrarPainelDetalhes = false;
+
+    private void MostrarPainelDetalhes()
+    {
+        mostrarPainelDetalhes = true;
+    }
+
+    private void FecharPainelDetalhes()
+    {
+        mostrarPainelDetalhes = false;
+    }
+
+    private void FiltrarSolicitacoes()
+    {
+    }
+}
