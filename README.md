@@ -1,25 +1,5 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# MiggoUI_Entrega
 
-<<<<<<< HEAD
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
-
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-=======
 Bem-vindo ao **Miggo UI**, um software desenvolvido para simplificar e gerenciar fluxos de criações de marketing com eficiência e praticidade.
 
 ## Sobre o Projeto
@@ -50,4 +30,3 @@ Contribuições são bem-vindas! Se você deseja melhorar o **Miggo UI**, sinta-
 
 **Equipe de Desenvolvimento**  
 Agradecemos a todos os envolvidos que tornaram o **Miggo UI** possível, promovendo inovação e eficiência no gerenciamento de fluxos criativos!
->>>>>>> 51a55bf9d62fc1b447be3d6caa244a1721bd940c
